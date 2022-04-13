@@ -1,0 +1,12 @@
+trainen
+- Dataset hebben
+- Dataset naar waveform omzetten
+- wafeform sturen naar trainer
+- trainer leert
+
+
+luisteren
+- speech opnemen
+- Opname resamplen
+- Resample omzetten naar waveform
+- Waveform predicten
