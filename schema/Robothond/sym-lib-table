@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name HC-SR04)(type Legacy)(uri /home/christian/Documents/School/roboticaProject/Project-Robotica/Schema/Symbols/HC-SR04/HC-SR04.lib)(options "")(descr ""))
+)
