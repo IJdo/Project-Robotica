@@ -4,14 +4,14 @@ EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
-Title ""
-Date ""
+Title "Aansluitschema Robothond"
+Date "20-04-2022"
 Rev ""
 Comp ""
-Comment1 ""
-Comment2 ""
+Comment1 "Christian Wanschers, Ijdo Eissennagger, Kris Boogert"
+Comment2 "Aansluitschema gerealiseerd door:"
 Comment3 ""
-Comment4 ""
+Comment4 "Design door Christian Wanschers"
 $EndDescr
 $Comp
 L Device:Battery BT1
