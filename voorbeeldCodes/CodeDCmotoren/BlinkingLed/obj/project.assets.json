@@ -220,19 +220,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\LatteProgrammer\\.nuget\\packages\\": {}
+    "C:\\Users\\IJdo\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\LatteProgrammer\\source\\repos\\BlinkingLed\\BlinkingLed.csproj",
+      "projectUniqueName": "D:\\Gebruikers\\IJdo\\Documenten\\GitHub\\Project-Robotica\\voorbeeldCodes\\CodeDCmotoren\\BlinkingLed\\BlinkingLed.csproj",
       "projectName": "BlinkingLed",
-      "projectPath": "C:\\Users\\LatteProgrammer\\source\\repos\\BlinkingLed\\BlinkingLed.csproj",
-      "packagesPath": "C:\\Users\\LatteProgrammer\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\LatteProgrammer\\source\\repos\\BlinkingLed\\obj\\",
+      "projectPath": "D:\\Gebruikers\\IJdo\\Documenten\\GitHub\\Project-Robotica\\voorbeeldCodes\\CodeDCmotoren\\BlinkingLed\\BlinkingLed.csproj",
+      "packagesPath": "C:\\Users\\IJdo\\.nuget\\packages\\",
+      "outputPath": "D:\\Gebruikers\\IJdo\\Documenten\\GitHub\\Project-Robotica\\voorbeeldCodes\\CodeDCmotoren\\BlinkingLed\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\LatteProgrammer\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\IJdo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -278,7 +283,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
       }
     }
   }

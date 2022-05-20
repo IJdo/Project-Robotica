@@ -1,16 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "oibfy+44O+mdm2PoekMg8s8ukRf5hx6a7VvAb8e4fz/3QmfMd4aF33Ial3nIOdP4mmyuPSX7PHAlJJPvl9G1NA==",
+  "dgSpecHash": "wT0Fgk+n7V6KaOEfHklkBWzXc5IKHd62j1nCXvkUu9Rf4XVrXm3sSMACcGQpfG6UGifryib71NbHrbIJjJnV0w==",
   "success": true,
-  "projectFilePath": "C:\\Users\\LatteProgrammer\\source\\repos\\BlinkingLed\\BlinkingLed.csproj",
+  "projectFilePath": "D:\\Gebruikers\\IJdo\\Documenten\\GitHub\\Project-Robotica\\voorbeeldCodes\\CodeDCmotoren\\BlinkingLed\\BlinkingLed.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\LatteProgrammer\\.nuget\\packages\\runtime.linux-arm.runtime.native.system.io.ports\\6.0.0\\runtime.linux-arm.runtime.native.system.io.ports.6.0.0.nupkg.sha512",
-    "C:\\Users\\LatteProgrammer\\.nuget\\packages\\runtime.linux-arm64.runtime.native.system.io.ports\\6.0.0\\runtime.linux-arm64.runtime.native.system.io.ports.6.0.0.nupkg.sha512",
-    "C:\\Users\\LatteProgrammer\\.nuget\\packages\\runtime.linux-x64.runtime.native.system.io.ports\\6.0.0\\runtime.linux-x64.runtime.native.system.io.ports.6.0.0.nupkg.sha512",
-    "C:\\Users\\LatteProgrammer\\.nuget\\packages\\runtime.native.system.io.ports\\6.0.0\\runtime.native.system.io.ports.6.0.0.nupkg.sha512",
-    "C:\\Users\\LatteProgrammer\\.nuget\\packages\\runtime.osx-arm64.runtime.native.system.io.ports\\6.0.0\\runtime.osx-arm64.runtime.native.system.io.ports.6.0.0.nupkg.sha512",
-    "C:\\Users\\LatteProgrammer\\.nuget\\packages\\runtime.osx-x64.runtime.native.system.io.ports\\6.0.0\\runtime.osx-x64.runtime.native.system.io.ports.6.0.0.nupkg.sha512",
-    "C:\\Users\\LatteProgrammer\\.nuget\\packages\\system.io.ports\\6.0.0\\system.io.ports.6.0.0.nupkg.sha512"
+    "C:\\Users\\IJdo\\.nuget\\packages\\runtime.linux-arm.runtime.native.system.io.ports\\6.0.0\\runtime.linux-arm.runtime.native.system.io.ports.6.0.0.nupkg.sha512",
+    "C:\\Users\\IJdo\\.nuget\\packages\\runtime.linux-arm64.runtime.native.system.io.ports\\6.0.0\\runtime.linux-arm64.runtime.native.system.io.ports.6.0.0.nupkg.sha512",
+    "C:\\Users\\IJdo\\.nuget\\packages\\runtime.linux-x64.runtime.native.system.io.ports\\6.0.0\\runtime.linux-x64.runtime.native.system.io.ports.6.0.0.nupkg.sha512",
+    "C:\\Users\\IJdo\\.nuget\\packages\\runtime.native.system.io.ports\\6.0.0\\runtime.native.system.io.ports.6.0.0.nupkg.sha512",
+    "C:\\Users\\IJdo\\.nuget\\packages\\runtime.osx-arm64.runtime.native.system.io.ports\\6.0.0\\runtime.osx-arm64.runtime.native.system.io.ports.6.0.0.nupkg.sha512",
+    "C:\\Users\\IJdo\\.nuget\\packages\\runtime.osx-x64.runtime.native.system.io.ports\\6.0.0\\runtime.osx-x64.runtime.native.system.io.ports.6.0.0.nupkg.sha512",
+    "C:\\Users\\IJdo\\.nuget\\packages\\system.io.ports\\6.0.0\\system.io.ports.6.0.0.nupkg.sha512"
   ],
   "logs": []
 }
