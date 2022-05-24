@@ -35,9 +35,9 @@ namespace RobotHond
             RobotBrain = new RobotArduino();
             Motor_RGHT = new Motor(RobotBrain, 8, 9, 5);
             Motor_LFT = new Motor(RobotBrain, 10, 11, 6);
-            Ultra_FRNT = new Ultrasonic_Sensor(RobotBrain, 18, 19);
-            Ultra_RGHT = new Ultrasonic_Sensor(RobotBrain, 20, 21);
-            Ultra_LFT = new Ultrasonic_Sensor(RobotBrain, 22, 23);
+            Ultra_FRNT = new Ultrasonic_Sensor(RobotBrain, 18, 19); //d18 and d19 are pins A0 and A1
+            Ultra_RGHT = new Ultrasonic_Sensor(RobotBrain, 20, 21); // d20 and d21 are pins A2 and A3
+            Ultra_LFT = new Ultrasonic_Sensor(RobotBrain, 22, 23); // d22 and d23 are pins A4 and A5
         }
 
         public void DriveForward(byte Speed)
@@ -51,7 +51,7 @@ namespace RobotHond
             RobotBrain.arduino.digitalWrite(Motor_LFT.Motor_IN1, Arduino.HIGH);
             RobotBrain.arduino.digitalWrite(Motor_LFT.Motor_IN2, Arduino.LOW);
         }
-        public void TurnLeft(byte Speed, int Duration) //to skid turn to the left the right wheel has to be powered while the left wheel is off.
+        public void TurnLeft(byte Speed, int Duration) //to skid turn to the left the right wheel has to be powered while the left wheel is off. To increase smoothness diffrent pwm speeds can be used.
         {
             RobotBrain.arduino.analogWrite(Motor_RGHT.Motor_PWM, Speed);
             RobotBrain.arduino.digitalWrite(Motor_RGHT.Motor_IN1, Arduino.HIGH);
@@ -61,7 +61,7 @@ namespace RobotHond
             RobotBrain.arduino.digitalWrite(Motor_RGHT.Motor_IN1, Arduino.LOW);
             RobotBrain.arduino.digitalWrite(Motor_RGHT.Motor_IN2, Arduino.LOW);
         }
-        public void TurnRight(byte Speed, int Duration) // to skid turn to the right the left wheel has to be powered and the right wheel has to be turned off.
+        public void TurnRight(byte Speed, int Duration) // to skid turn to the right the left wheel has to be powered and the right wheel has to be turned off. To increase smoothness diffrent pwm speeds can be used.
         {
             RobotBrain.arduino.analogWrite(Motor_LFT.Motor_PWM, Speed);
             RobotBrain.arduino.digitalWrite(Motor_LFT.Motor_IN1, Arduino.HIGH);
