@@ -1,0 +1,26 @@
+Methode schrijven voor:
+	- Hardware
+		- Bezig geweest met schema maken op basis van alle bekende benodigde hardware
+		- Schema realiseren 
+		- Tests programmeren om de werking van de hardware te testen
+		- Wat voor methode is dit?
+		
+	- Software
+		- Uitzoeken welke library en programmertaal het beste past bij specialisatie
+		- Uitproberen, kijken of het toepasbaar is of niet (vanwege missende kennis en ervaring)
+		- Wat voor methode is dit?
+
+experiment om parameters opzetten waaraan te zien is dat de tests succesvol zijn uitgevoerd
+hardare is middel om experiment te bewijzen
+hardware bepalt welke parameters nodig zijn om te valideren
+
+theoretisch kader voor Uitzoeken welke library en programmertaal het beste past bij specialisatie
+aan de hand van bestaande oplossingen die het meest geschikt
+
+theoretisch kader: staat lijstje in met keuzes en welke keuze ik uiteindelijk gemaakt heb, bijvoorbeeld de keuze tussen pytorch en opencv 
+methode bestaat uit: 
+	experiment die een set parameters bevat om te kunnen bewijzen dat geschreven code werkt
+	daarnaast is hardware een middel om het experiment te bewwijzen, een van de parameters dus
+	experiment is er om te bewijzen dat tests succesvol zijn afgerond
+
+
