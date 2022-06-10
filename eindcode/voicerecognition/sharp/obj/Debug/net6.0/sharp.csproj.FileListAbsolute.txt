@@ -1,0 +1,15 @@
+D:\School\Project-Robotica\eindcode\voicerecognition\sharp\bin\Debug\net6.0\sharp.exe
+D:\School\Project-Robotica\eindcode\voicerecognition\sharp\bin\Debug\net6.0\sharp.deps.json
+D:\School\Project-Robotica\eindcode\voicerecognition\sharp\bin\Debug\net6.0\sharp.runtimeconfig.json
+D:\School\Project-Robotica\eindcode\voicerecognition\sharp\bin\Debug\net6.0\sharp.dll
+D:\School\Project-Robotica\eindcode\voicerecognition\sharp\bin\Debug\net6.0\sharp.pdb
+D:\School\Project-Robotica\eindcode\voicerecognition\sharp\obj\Debug\net6.0\sharp.csproj.AssemblyReference.cache
+D:\School\Project-Robotica\eindcode\voicerecognition\sharp\obj\Debug\net6.0\sharp.GeneratedMSBuildEditorConfig.editorconfig
+D:\School\Project-Robotica\eindcode\voicerecognition\sharp\obj\Debug\net6.0\sharp.AssemblyInfoInputs.cache
+D:\School\Project-Robotica\eindcode\voicerecognition\sharp\obj\Debug\net6.0\sharp.AssemblyInfo.cs
+D:\School\Project-Robotica\eindcode\voicerecognition\sharp\obj\Debug\net6.0\sharp.csproj.CoreCompileInputs.cache
+D:\School\Project-Robotica\eindcode\voicerecognition\sharp\obj\Debug\net6.0\sharp.dll
+D:\School\Project-Robotica\eindcode\voicerecognition\sharp\obj\Debug\net6.0\refint\sharp.dll
+D:\School\Project-Robotica\eindcode\voicerecognition\sharp\obj\Debug\net6.0\sharp.pdb
+D:\School\Project-Robotica\eindcode\voicerecognition\sharp\obj\Debug\net6.0\sharp.genruntimeconfig.cache
+D:\School\Project-Robotica\eindcode\voicerecognition\sharp\obj\Debug\net6.0\ref\sharp.dll
