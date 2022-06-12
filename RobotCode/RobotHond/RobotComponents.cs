@@ -70,6 +70,7 @@ namespace RobotHond.Components
             RobotBrain.arduino.pinMode(Ultra_TRG, Arduino.OUTPUT);
             RobotBrain.arduino.pinMode(Ultra_ECH, Arduino.INPUT);
             RobotBrain.arduino.digitalRead(Ultra_TRG);
+            Distance = 3; // initialize with 3 because 3 is maximum distance in a 3x3 room
         }
 
 
@@ -145,7 +146,7 @@ namespace RobotHond.Components
             //RobotBrain.arduino.digitalWrite(Ultra_TRG, Arduino.HIGH);
             //sw.Start();
             //if(sw.ElapsedTicks == )
-            Distance = (SPEED_OF_SOUND / 2 * PulseWidth());
+            Distance = (SPEED_OF_SOUND / 2 * PulseWidth()); //Distance in meters
         }
     }
 }

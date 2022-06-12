@@ -51,12 +51,20 @@ namespace RobotHond
             RobotBrain.arduino.digitalWrite(Motor_LFT.Motor_IN1, Arduino.HIGH);
             RobotBrain.arduino.digitalWrite(Motor_LFT.Motor_IN2, Arduino.LOW);
         }
-        public void TurnLeft(byte Speed, int Duration) //to skid turn to the left the right wheel has to be powered while the left wheel is off. To increase smoothness diffrent pwm speeds can be used.
+        public void StopMotor()
+        {
+            //stop the motor
+            RobotBrain.arduino.digitalWrite(Motor_RGHT.Motor_IN1, Arduino.LOW);
+            RobotBrain.arduino.digitalWrite(Motor_RGHT.Motor_IN2, Arduino.LOW);
+            RobotBrain.arduino.digitalWrite(Motor_LFT.Motor_IN1, Arduino.LOW);
+            RobotBrain.arduino.digitalWrite(Motor_LFT.Motor_IN2, Arduino.LOW);
+        }
+        public void TurnLeft(byte Speed, int Duration) //to skid turn to the left the right wheel has to be powered while the left wheel is off. To increase smoothness diffrent pwm speeds can be used. Duration is the duration of turning in milisecs
         {
             RobotBrain.arduino.analogWrite(Motor_RGHT.Motor_PWM, Speed);
             RobotBrain.arduino.digitalWrite(Motor_RGHT.Motor_IN1, Arduino.HIGH);
             RobotBrain.arduino.digitalWrite(Motor_RGHT.Motor_IN2, Arduino.LOW);
-            Thread.Sleep(Duration);
+            Thread.Sleep(Duration); 
             //stop the motor
             RobotBrain.arduino.digitalWrite(Motor_RGHT.Motor_IN1, Arduino.LOW);
             RobotBrain.arduino.digitalWrite(Motor_RGHT.Motor_IN2, Arduino.LOW);
