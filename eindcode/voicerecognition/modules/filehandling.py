@@ -16,6 +16,6 @@ class FileHandler(File):
         return contents
 
 
-fileObj = File("name", "Contents in file")
-fileWriter = FileHandler.setFileContents(fileObj)
-print(FileHandler.getFileContents(fileObj))
+# fileObj = File("name", textString)
+# fileWriter = FileHandler.setFileContents(fileObj)
+# print(FileHandler.getFileContents(fileObj))

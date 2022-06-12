@@ -5,24 +5,9 @@ using sharp.fileHandling;
 using sharp.arduinoBrain;
 
 namespace sharp{
-    // sealed class fileReceiver {
-    //     private string name;
-    //     private string fileText { get; set; } = string.Empty;
-
-    //     public fileReceiver(string fileName) {
-    //         name = fileName;
-    //     }
-
-    //     public string receiveFile() {
-    //         fileText = File.ReadAllText(@"..\" + name + ".txt");
-    //         // Console.WriteLine(fileText);
-    //         return fileText;
-    //     }
-    // }
-
     class Program{
 
-        private fileHandling.fileReceiver fileReceiver = new fileReceiver("name");
+        private fileHandling.fileReceiver fileReceiver = new fileReceiver("temporalCommand");
         private ArduinoBrain arduino = new ArduinoBrain();
 
         static void Main(string[] args)  {
