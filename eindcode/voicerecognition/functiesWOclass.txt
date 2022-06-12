@@ -1,0 +1,12 @@
+eventueel nieuwe class
+label_to _index
+index_to_label
+pad_sequence
+collate_fn
+countt_parameters
+train
+number_of_correct
+gett_likely_index
+test
+predict
+record
