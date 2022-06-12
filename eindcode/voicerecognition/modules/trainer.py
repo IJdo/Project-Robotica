@@ -44,13 +44,6 @@ class Trainer:
         )
 
         self.pbar_update = 1 / (len(self.train_loader) + len(self.test_loader))
-    
-    # def get_train_set(self):
-    #     return self.train_set
-
-
-    # def get_test_set(self):
-    #     return self.test_set    
 
 
     def train(self, model, pbar):
@@ -88,13 +81,9 @@ class Trainer:
 
     def collate_fn(self, batch):
 
-
-        # A data tuple has the form:
-        # waveform, sample_rate, label, speaker_id, utterance_number
-
         tensors, targets = [], []
 
-        # Gather in lists, and encode labels as indices
+        # Gather in lists, and encode labels
         for waveform, _, label, *_ in batch:
             tensors += [waveform]
             targets += [self.resampler.label_to_index(label)]
@@ -133,22 +122,6 @@ class Trainer:
         return batch.permute(0, 2, 1)
 
 
-# batch_size = 256  # is in class
-
-
-
-
-
-######################################################################
-# Now that we have a training function, we need to make one for testing
-# the networks accuracy. We will set the model to ``eval()`` mode and then
-# run inference on the test dataset. Calling ``eval()`` sets the training
-# variable in all modules in the network to false. Certain layers like
-# batch normalization and dropout layers behave differently during
-# training so this step is crucial for getting correct results.
-#
-
-
     def number_of_correct(self, pred, target):
         # count number of correct predictions
         return pred.squeeze().eq(target).sum().item()
@@ -157,29 +130,3 @@ class Trainer:
     def get_likely_index(self, tensor):  # convert math to numbers in tensor
         # find most likely label index for each element in the batch
         return tensor.argmax(dim=-1)
-
-
-
-
-
-    ######################################################################
-    # Finally, we can train and test the network. We will train the network
-    # for ten epochs then reduce the learn rate and train for ten more epochs.
-    # The network will be tested after each epoch to see how the accuracy
-    # varies during the training.
-    #
-
-    # TODO: place in new function
-    # log_interval = 20
-    # n_epoch = 0  # amount of epochs
-
-    # # pbar_update = 1 / (len(self.train_loader) + len(self.test_loader))
-    # losses = []
-
-    # # The transform needs to live on the same device as the model and the data.
-    # transform = transform.to(device)
-    # with tqdm(total=n_epoch) as pbar:
-    #     for epoch in range(1, n_epoch + 1):
-    #         train(model, epoch, log_interval)
-    #         test(model, epoch)
-    #         # scheduler.step()
