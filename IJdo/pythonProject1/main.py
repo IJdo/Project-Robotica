@@ -1,6 +1,8 @@
 import socket
 import sys
 from struct import unpack
+import numpy as np
+from PIL import Image
 
 class UDP_receiver:
     def __init__(self, host, port): #make sure host and port are the same as the sender
@@ -14,14 +16,66 @@ class UDP_receiver:
     def unpack(self):
         message, address = UDP_receiver.sock.recvfrom(4096)
         print(f'Received {len(message)} bytes:')
-        return unpack('1f', message)
+        return unpack('2f', message)
 
 
-
+class data_point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
 
 
 if __name__ == '__main__':
-    UDP_receiver = UDP_receiver('192.168.178.178', 65000)
+    y = 0
+    UDP_receiver = UDP_receiver('192.168.55.128', 65000)
+    map = np.zeros((300,300))
+    map[0][0] = 255
+    map[299][299] = 255
+    img = Image.fromarray(map)
+    img.show()
+    huidige_richting = 0
+    robotLocatie = data_point(0,0)
+    muurLocatie = data_point(0,0)
+
+
+
+
+
+    #afstand in 1 sec is 70 cm.
+    #elke lezing = y + 10.
+    reading = UDP_receiver.unpack()
+    robotLocatie.x = reading[0]
+    for i in range(10):
+
+
+
+
+        reading = UDP_receiver.unpack()
+        print(f'Distance: {reading[0]}', f'Odometry: {reading[1]}')
+        huidige_richting += reading[1]
+        print(f"richting: {huidige_richting}")
+
+
+        if huidige_richting == 0:
+            robotLocatie.y = robotLocatie.y + 10
+            muurLocatie.y = robotLocatie.y
+            muurLocatie.x = robotLocatie.x - reading[0]
+            print(f"robot x: {robotLocatie.x}", f"robot y: {robotLocatie.y}", f"muurlocatie x = {muurLocatie.x}", f"muurlocatie y: {muurLocatie.y}")
+
+            map[int(robotLocatie.y)][int(robotLocatie.x)] = 255
+            map[int(muurLocatie.y)][int(muurLocatie.x)] = 100 # naar voren rijden
+        elif huidige_richting == 270:
+            robotLocatie.x = robotLocatie.x + 10
+            muurLocatie.x = muurLocatie.x +10
+            muurLocatie.y = robotLocatie.y + reading[0]
+            map[int(robotLocatie.y)][int(robotLocatie.x)] = 255
+            map[int(muurLocatie.y)][int(muurLocatie.x)] = 100 #naar rechts rijden
+
+    print(map)
+    img = Image.fromarray(map)
+    img.show()
+
+
     # while True:
-    x = UDP_receiver.unpack()
-    print(f'Distance: {x}')
+    #     x = UDP_receiver.unpack()
+    #     print(f'Distance: {x}')
