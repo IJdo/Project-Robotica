@@ -27,51 +27,42 @@ class data_point:
 
 if __name__ == '__main__':
     y = 0
-    UDP_receiver = UDP_receiver('192.168.55.128', 65000)
+    UDP_receiver = UDP_receiver('192.168.178.178', 65000) # pc ijdo, 192.168.55.128 mobiele hotspot ijdo
     map = np.zeros((300,300))
-    map[0][0] = 255
-    map[299][299] = 255
-    img = Image.fromarray(map)
-    img.show()
     huidige_richting = 0
     robotLocatie = data_point(0,0)
     muurLocatie = data_point(0,0)
 
-
-
-
-
     #afstand in 1 sec is 70 cm.
     #elke lezing = y + 10.
     reading = UDP_receiver.unpack()
-    robotLocatie.x = reading[0]
+    robotLocatie.x = robotLocatie.x + reading[0]
+    print(f'Distance: {reading[0]}', f'Odometry: {reading[1]}')
     for i in range(10):
-
-
-
 
         reading = UDP_receiver.unpack()
         print(f'Distance: {reading[0]}', f'Odometry: {reading[1]}')
         huidige_richting += reading[1]
         print(f"richting: {huidige_richting}")
 
-
         if huidige_richting == 0:
             robotLocatie.y = robotLocatie.y + 10
             muurLocatie.y = robotLocatie.y
-            muurLocatie.x = robotLocatie.x - reading[0]
+            muurLocatie.x = robotLocatie.x - reading[0] #fix issue with varying sensor data (40-41 = -1)
+            if muurLocatie.x < 0:
+                muurLocatie.x = 0
             print(f"robot x: {robotLocatie.x}", f"robot y: {robotLocatie.y}", f"muurlocatie x = {muurLocatie.x}", f"muurlocatie y: {muurLocatie.y}")
 
             map[int(robotLocatie.y)][int(robotLocatie.x)] = 255
-            map[int(muurLocatie.y)][int(muurLocatie.x)] = 100 # naar voren rijden
+            map[int(muurLocatie.y)][int(muurLocatie.x)] = 155 #naar voren rijden
         elif huidige_richting == 270:
             robotLocatie.x = robotLocatie.x + 10
             muurLocatie.x = muurLocatie.x +10
             muurLocatie.y = robotLocatie.y + reading[0]
             map[int(robotLocatie.y)][int(robotLocatie.x)] = 255
-            map[int(muurLocatie.y)][int(muurLocatie.x)] = 100 #naar rechts rijden
+            map[int(muurLocatie.y)][int(muurLocatie.x)] = 155 #naar rechts rijden
 
-    print(map)
+
     img = Image.fromarray(map)
     img.show()
 
