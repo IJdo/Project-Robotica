@@ -17,7 +17,12 @@ class UDP_receiver:
     def unpack(self):
         message, address = UDP_receiver.sock.recvfrom(4096)
         print(f'Received {len(message)} bytes:')
-        return unpack('2f', message)
+        return unpack('5f', message)
+
+    def end(self):
+        message, address = UDP_receiver.sock.recvfrom(4096)
+        print(f'Received {len(message)} bytes:')
+        return unpack('1i', message)
 
 class data_point:
     def __init__(self, x, y):
@@ -43,70 +48,137 @@ class Map:
 class _mapRobot:
     def __init__(self, map, dist_frnt, dist_lft, dist_rght):
         self.initial_dist_frnt = dist_frnt
-        self.initial_dist_lft = dist_lft
-        self.initial_dist_rght = dist_rght
-        x = ((0 + dist_lft)+(map.width - dist_rght))/2 # bepaal midden van robot op locatie (x,0). Werkt alleen als er geen objecten naast de robot zijn.
-        y = ((map.height - dist_frnt)) #bepaal y van de robot (werkt alleen als er initieel geen objecten voor de robot zijn
+        self.distance_till_end = dist_frnt
+        self.distance_left_vorige = dist_left
+        self.distance_right_vorige = dist_right
+        self.total_distance_travelled_0 = 0
+        self.total_distance_travelled_90 = 0
+        self.total_distance_travelled_180 = 0
+        self.total_distance_travelled_270 = 0
+        #self.initial_dist_lft = dist_lft
+        #self.initial_dist_rght = dist_rght
+        #x = 30 # bepaal midden van robot op locatie (x,0). Werkt alleen als er geen objecten naast de robot zijn.
+        #y = 40 #((map.height - dist_frnt)) #bepaal y van de robot (werkt alleen als er initieel geen objecten voor de robot zijn.. is 12 omdat robot 25cm is /2  = 12,5
+        x = 0 + dist_rght
+        y = (map.height - dist_front)
         self.location = data_point(x,y) #robot start altijd in de hoek
-        map.map[self.location.y][self.location.x] = 200 #plaats de robot op de kaart
+        map.map[int(self.location.y)][int(self.location.x)] = 100 #plaats de robot op de kaart
         self.orientatie = 0 #zet de orientatie van de robot op 0
         self.obstacle = data_point(0,0) #maak een object aan voor het tekeken van de data punten waar de robot niet kan rijden.
+        self.orientatie_last = 0
 
-    def update_robot(self, distance_front, distance_left, distance_right, distance_traveld):# rechtdoor rijden, depth first algoritme.
+    def update_robot(self, distance_front, distance_left, distance_right, odometry, reciever):# rechtdoor rijden, depth first algoritme.
+        self.orientatie = odometry
         if self.orientatie == 0:
-            if ((distance_right + distance_left)*1.1) < map.width: #check for objects
-                if (distance_right * 1.1) < self.initial_dist_rght: #obstakel rechts van de robot. als gemeten afstand +10% < initiale afstand
-                    self.location.x = self.location.x
-                    self.location.y = self.location.y + distance_traveld
-                    self.obstacle.x = self.location.x + distance_right
-                    self.obstacle.y = self.location.y
-                    map.map[self.location.y][self.location.x] = 200
-                    map.map[self.obstacle.y][self.obstacle.x] = 255
-                elif (distance_left * 1.1) < self.initial_dist_lft: #obstakel links van de robot.
-                    self.location.x = self.location.x
-                    self.location.y = self.location.y + distance_traveld
-                    self.obstacle.x = self.location.x - distance_left
-                    self.obstacle.y = self.location.y
-                    map.map[self.location.y][self.location.x] = 200
-                    map.map[self.obstacle.y][self.obstacle.x] = 255
-                else:
-                    self.location.x = self.location.x
-                    self.location.y = self.location.y + distance_traveld
+            afgelegde_afstand = self.initial_dist_frnt - distance_front
+            self.location.y = self.location.y + afgelegde_afstand
+            #self.location.x = ((map.width - distance_right)+(0 + distance_left))/2
+            #distance_left + distance_right = 300
+            if (distance_left*1.15) < self.distance_left_vorige:
+                self.location.x = (map.width - dist_right)
+                self.obstacle.x = self.location.x + distance_left
+                self.obstacle.y = self.location.y
+                map.map[int(self.obstacle.y)][int(self.obstacle.x)] = 255
+                #er zit een object aan de linker kant
+            elif (distance_right*1.15) < self.distance_right_vorige:
+                print(distance_right)
+                print(self.distance_right_vorige)
+                self.location.x = (0 + distance_left)
+                self.obstacle.x = self.location.x - distance_right
+                self.obstacle.y = self.location.y
+                print(self.obstacle.x)
+                print(self.obstacle.y)
+                map.map[int(self.obstacle.y)][int(self.obstacle.x)] = 255
             else:
-                self.location.x = self.location.x
-                self.location.y = self.location.y + distance_traveld
+                # er zit geen object
+                self.location.x = (0 + distance_right)
+                pass
 
+            map.map[int(self.location.y)][int(self.location.x)] = 100
+            self.distance_left_vorige = distance_left
+            self.distance_right_vorige = distance_right
 
-
-            # x_offset_right = 300 - distance_right # bereken locatie rechter sensor
-            # x_offset_left = 0 + distance_left # bereken locatie linker sensor
-            # x_offset_true = (x_offset_right + x_offset_left)/2 # pak het midden van de twee locaties.
-            # self.location.y = 300 - distance_front #elke keer dat de robot naar voren rijdt moet de update functie uitgevoerd worden.
-            # self.location.x = MuurLinks
+            # if self.orientatie_last != 0: #check of laatste orientatie richting anders was.
+            #     x = reciever.unpack()
+            #     self.distance_till_end = x[0]
+            #     self.total_distance_travelled_0 = 0
+            #
+            # distance_travelled = self.distance_till_end - distance_front        # bereken afgelegde afstand aan de hand van de voor sensor.
+            # self.total_distance_travelled_0 = self.total_distance_travelled_0 + distance_travelled
+            # self.distance_till_end = distance_front
+            # self.location.y = self.location.y + distance_travelled  # bereken nieuwe y locatie in de map
+            # self.obstacle.x = self.location.x + distance_left       # bereken afstand vanaf robot tot uitgelezen sensor
+            # self.obstacle.y = self.location.y                       # obstacle staat op zelfde hoogte als robot
+            # print(f"robot.x = {self.location.x}", f"robot.y = {self.location.y}", f"obstakel.x = {self.obstacle.x} ", f"obstakel.y = {self.obstacle.y}" )
+            # map.map[int(self.obstacle.y)][int(self.obstacle.x)] = 255         # map de sensor lezing links
+            # self.obstacle.x = self.location.x - distance_right      # bereken obstacle afstand rechts
+            # map.map[int(self.obstacle.y)][int(self.obstacle.x)] = 255         # map obstacle afstand rechts
+            # if self.total_distance_travelled_90 > 45 and self.total_distance_travelled_90 < 55:
+            #     map.map[int(self.location.y)][int(self.location.x)] = 100
+            # self.orientatie_last = 0
         if self.orientatie == 90:
-            pass
-            #doe iets.
+
+            if self.orientatie_last != 90: #check of laatste orientatie richting anders was.
+                x = reciever.unpack()
+                self.distance_till_end = x[0]
+                self.total_distance_travelled_90 = 0
+
+            distance_travelled = self.distance_till_end - distance_front
+            self.total_distance_travelled_90 = self.total_distance_travelled_90 + distance_travelled
+            self.location.y = self.location.y
+            self.location.x = self.location.x + distance_travelled
+            self.obstacle.x = self.location.x
+            self.obstacle.y = self.location.y - distance_left
+            print(f"robot.x = {self.location.x}", f"robot.y = {self.location.y}", f"obstakel.x = {self.obstacle.x} ",
+                  f"obstakel.y = {self.obstacle.y}")
+            map.map[int(self.obstacle.y)][int(self.obstacle.x)] = 255
+            self.obstacle.y = self.location.y + distance_right
+            map.map[int(self.obstacle.y)][int(self.obstacle.x)] = 255
+            if self.total_distance_travelled_90 > 45 and self.total_distance_travelled_90 < 55:
+                map.map[int(self.location.y)][int(self.location.x)] = 155
+            self.orientatie_last = 90
+
         if self.orientatie == 180:
-            pass
+            if self.orientatie_last != 180: #check of laatste orientatie richting anders was.
+                self.distance_till_end = distance_front
+                self.total_distance_travelled_180 = 0
+
+            distance_travelled = self.distance_till_end - distance_front
+            self.total_distance_travelled_180 = self.total_distance_travelled_180 + distance_travelled
+            self.distance_till_end = distance_front
+            self.location.y = self.location.y - distance_travelled  # bereken nieuwe y locatie in de map
+            self.obstacle.x = self.location.x - distance_left  # bereken afstand vanaf robot tot uitgelezen sensor
+            self.obstacle.y = self.location.y  # obstacle staat op zelfde hoogte als robot
+            print(f"robot.x = {self.location.x}", f"robot.y = {self.location.y}", f"obstakel.x = {self.obstacle.x} ",
+                  f"obstakel.y = {self.obstacle.y}")
+            map.map[int(self.obstacle.y)][int(self.obstacle.x)] = 255  # map de sensor lezing links
+            self.obstacle.x = self.location.x + distance_right  # bereken obstacle afstand rechts
+            map.map[int(self.obstacle.y)][int(self.obstacle.x)] = 255  # map obstacle afstand rechts
+            if self.total_distance_travelled_180 > 45 and self.total_distance_travelled_180 < 55:
+                map.map[int(self.location.y)][int(self.location.x)] = 100
+            self.orientatie_last = 90
+
         if self.orientatie == 270:
-            pass
+            if self.orientatie_last != 90:  # check of laatste orientatie richting anders was.
+                x = reciever.unpack()
+                self.distance_till_end = x[0]
+                self.total_distance_travelled_270 = 0
 
+            distance_travelled = self.distance_till_end - distance_front
+            self.total_distance_travelled_270 = self.total_distance_travelled_270 + distance_travelled
+            self.location.y = self.location.y
+            self.location.x = self.location.x - distance_travelled
+            self.obstacle.x = self.location.x
+            self.obstacle.y = self.location.y + distance_left
+            print(f"robot.x = {self.location.x}", f"robot.y = {self.location.y}", f"obstakel.x = {self.obstacle.x} ",
+                  f"obstakel.y = {self.obstacle.y}")
+            map.map[int(self.obstacle.y)][int(self.obstacle.x)] = 255
+            self.obstacle.y = self.location.y - distance_right
+            map.map[int(self.obstacle.y)][int(self.obstacle.x)] = 255
+            if self.total_distance_travelled_270 > 45 and self.total_distance_travelled_270 < 55:
+                map.map[int(self.location.y)][int(self.location.x)] = 100
+            self.orientatie_last = 270
 
-        # self.location.x = 0 + x_offset_true
-
-
-        print(self.location.x)
-        print(self.location.y)
-        map.map[int(self.location.y)][int(self.location.x)] = 100
-        map.map[int(self.location.y + (distance_front - 1))][int(self.location.x)] = 255
-        map.map[int(self.location.y)][int(self.location.x + distance_right)] = 255
-        map.map[int(self.location.y)][int(self.location.x - distance_left)] = 255
-
-    # def update_obstacles(self, distance_front, distance_left, distance_right, distance_traveld, odometry):
-    #     if odometry is 0:
-    #
-    #
-    #     self.map[int(self.obstacle.y)][int(self.obstacle.y)] = 255
 
     def open_map(self):
         img = Image.fromarray(map.map)
@@ -114,14 +186,27 @@ class _mapRobot:
 
 
 if __name__ == '__main__':
-    map = Map(300, 300)
-    UDP_receiver = UDP_receiver('192.168.178.178', 65000)  # pc ijdo, 192.168.55.128 mobiele hotspot ijdo
-    maprobot = _mapRobot(map)
-    # for x in range(200):
-    #     maprobot.update_robot((280 - x), 265, 25, 0, 0)
-    #
-    # maprobot.open_map()
-    mapmuren = _mapMuren(map)
+    map = Map(150, 150)
+    _mapMuren(map)
+    UDP_receiver = UDP_receiver('192.168.203.128', 65000)  # pc ijdo, 192.168.55.128 mobiele hotspot ijdo
+    reading = UDP_receiver.unpack()
+    end_reading = reading[4]
+    print(f'Distance_front: {reading[0]}', f'Distance_left:{reading[1]}', f'Distance_right: {reading[2]}' f'Odometry: {reading[3]}')
+    dist_front = reading[0]
+    dist_left = reading[1]
+    dist_right = reading[2]
+    maprobot = _mapRobot(map=map, dist_frnt=dist_front, dist_rght=dist_right, dist_lft=dist_left )
+
+    while(int(reading[4])>0):
+        reading = UDP_receiver.unpack()
+        print(f'Distance_front: {reading[0]}', f'Distance_left:{reading[1]}',
+              f'Distance_right: {reading[2]}' f'Odometry: {reading[3]}')
+        dist_front = reading[0]
+        dist_left = reading[1]
+        dist_right = reading[2]
+        odometry = reading[3]
+        maprobot.update_robot(distance_left=dist_left, distance_right=dist_right, distance_front=dist_front, odometry=odometry, reciever=UDP_receiver)
+
     maprobot.open_map()
 
 
