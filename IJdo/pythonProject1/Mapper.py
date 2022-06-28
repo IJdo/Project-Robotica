@@ -3,6 +3,28 @@ import sys
 from struct import unpack
 from PIL import Image
 import numpy as np
+from io import StringIO
+
+class UDP_sender:
+    def __int__(self, host, port):
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.host = host  # 192.168.178.186 is adress pi, 192.168.178.178 is pc
+        self.port = port
+        self.server_address = (host, port)
+        self.sock.bind(self.server_address)
+
+    def pack_map(self, map):
+        if not isinstance(map, np.ndarray):
+            print('not a valid map')
+            return
+        self.sock.connect(self.server_address)
+        print('Connected to %s on port %s' % (self.server_address[0], self.server_address[1]))
+        f = StringIO()
+        np.savez_compressed(f, frame=map)
+        f.seek(0)
+        out = f.read()
+        self.sock.sendall(out)
+        print("map send")
 
 
 class UDP_receiver:
@@ -186,9 +208,9 @@ class _mapRobot:
 
 
 if __name__ == '__main__':
-    map = Map(150, 150)
+    map = Map(200, 200)
     _mapMuren(map)
-    UDP_receiver = UDP_receiver('192.168.203.128', 65000)  # pc ijdo, 192.168.55.128 mobiele hotspot ijdo
+    UDP_receiver = UDP_receiver('192.168.3.128', 65000)  # pc ijdo, 192.168.55.128 mobiele hotspot ijdo
     reading = UDP_receiver.unpack()
     end_reading = reading[4]
     print(f'Distance_front: {reading[0]}', f'Distance_left:{reading[1]}', f'Distance_right: {reading[2]}' f'Odometry: {reading[3]}')
