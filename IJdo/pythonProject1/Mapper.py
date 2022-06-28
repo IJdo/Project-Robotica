@@ -100,6 +100,10 @@ class _mapRobot:
                 self.location.x = (map.width - dist_right)
                 self.obstacle.x = self.location.x + distance_left
                 self.obstacle.y = self.location.y
+                if(self.obstacle.y > map.height):
+                    self.obstacle.y = map.height
+                if(self.obstacle.x > map.width):
+                    self.obstacle.x = map.width
                 map.map[int(self.obstacle.y)][int(self.obstacle.x)] = 255
                 #er zit een object aan de linker kant
             elif (distance_right*1.15) < self.distance_right_vorige:
@@ -108,13 +112,14 @@ class _mapRobot:
                 self.location.x = (0 + distance_left)
                 self.obstacle.x = self.location.x - distance_right
                 self.obstacle.y = self.location.y
-                print(self.obstacle.x)
-                print(self.obstacle.y)
+                if (self.obstacle.y > map.height):
+                    self.obstacle.y = map.height
+                if (self.obstacle.x > map.width):
+                    self.obstacle.x = map.width
                 map.map[int(self.obstacle.y)][int(self.obstacle.x)] = 255
             else:
                 # er zit geen object
                 self.location.x = (0 + distance_right)
-                pass
 
             map.map[int(self.location.y)][int(self.location.x)] = 100
             self.distance_left_vorige = distance_left
